@@ -1,0 +1,440 @@
+# Import the necessary tools from the Flask framework
+from flask import Flask
+
+# Create an instance of the Flask application
+app = Flask(__name__)
+
+# --- The Complete HTML for Your Stunning Portfolio ---
+# This version includes a new "Jarvis-style" animated background.
+HTML_CONTENT = """
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krishnamurthy Bhavalal Jadhav | Creative Technologist</title>
+    <meta name="description" content="The portfolio of Krishnamurthy Bhavalal Jadhav, a creative technologist and digital problem solver specializing in AI, coding, and business automation.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* A more refined and professional theme with a futuristic feel */
+        body {
+            background-color: #0A0A0A; /* Deeper black for a premium feel */
+            color: #E0E0E0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Jarvis Background Canvas */
+        #jarvis-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* This is crucial to keep it in the background */
+        }
+
+        .text-glow {
+            text-shadow: 0 0 10px rgba(239, 68, 68, 0.5), 0 0 20px rgba(239, 68, 68, 0.3);
+        }
+        
+        /* Enhanced 3D Card Effect */
+        .card-3d {
+            background-color: rgba(20, 20, 20, 0.8); /* Slightly transparent */
+            backdrop-filter: blur(10px);
+            border: 1px solid #2a2a2a;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            transform-style: preserve-3d;
+            will-change: transform;
+            position: relative;
+            overflow: hidden;
+        }
+        .card-3d::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #EF4444, transparent);
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+        }
+        .card-3d:hover {
+            transform: perspective(1500px) translateY(-10px) rotateX(5deg) scale(1.05);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.7), 0 0 25px rgba(239, 68, 68, 0.4);
+            border-color: rgba(239, 68, 68, 0.5);
+        }
+        .card-3d:hover::before {
+            transform: translateX(100%);
+        }
+
+        .tag {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #EF4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .tag:hover {
+            background-color: #EF4444;
+            color: #FFFFFF;
+        }
+        .section-heading {
+            border-bottom: 2px solid #EF4444;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+        .nav-link {
+            position: relative;
+            transition: color 0.3s;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #EF4444;
+            transform-origin: bottom right;
+            transition: transform 0.25s ease-out;
+        }
+        .nav-link:hover {
+            color: #EF4444;
+        }
+        .nav-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+    </style>
+</head>
+<body class="font-sans leading-relaxed">
+
+    <!-- The Jarvis Background Canvas -->
+    <canvas id="jarvis-background"></canvas>
+
+    <!-- Header & Navigation -->
+    <header class="bg-[#101010]/50 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-800/50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-black text-white tracking-wider">KBJ.</a>
+            <div class="hidden md:flex items-center space-x-8 text-gray-300">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#experience" class="nav-link">Experience</a>
+                <a href="#contact" class="px-5 py-2 border border-red-600 text-red-600 font-bold rounded-lg hover:bg-red-600 hover:text-white transition-all duration-300">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12 md:py-20 relative z-10">
+
+        <!-- Hero Section -->
+        <section class="text-center min-h-[70vh] flex flex-col justify-center items-center">
+            <h1 class="text-5xl md:text-7xl font-black text-white mb-3 leading-tight">Krishnamurthy Bhavalal Jadhav</h1>
+            <h2 class="text-2xl md:text-4xl font-semibold text-red-500 text-glow mt-2">
+                Creative Technologist & Digital Problem Solver
+            </h2>
+            <p class="mt-8 max-w-3xl mx-auto text-gray-300 text-lg">
+                I merge technology, business acumen, and creative vision to build innovative solutions. From AI automation to sales strategy, I am driven to create value and achieve results.
+            </p>
+            <a href="#projects" class="mt-10 px-8 py-4 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition-transform transform hover:scale-105 shadow-lg shadow-red-600/30">
+                View My Work
+            </a>
+        </section>
+
+        <!-- About Me Section -->
+        <section id="about" class="py-24">
+            <h2 class="section-heading text-4xl font-bold mb-12">About Me</h2>
+            <div class="grid md:grid-cols-5 gap-12 items-center">
+                <div class="md:col-span-3 text-gray-300 space-y-5 text-lg">
+                    <p>
+                        Hello! I'm Krishnamurthy, a multi-passionate creator with a deep curiosity for how things work—both in code and in business. My journey started in a general store, where I learned the fundamentals of sales and customer interaction firsthand. This real-world experience sparked my ambition.
+                    </p>
+                    <p>
+                        Today, I channel that ambition into the digital world. I'm passionate about leveraging technology, especially AI and automation, to solve real problems and build efficient, profitable systems. Whether it's developing a custom AI, streamlining a business's online presence, or editing compelling video content, I thrive on turning ideas into reality. I'm on a mission to build a future where technology and business strategy create exceptional outcomes.
+                    </p>
+                </div>
+                <div class="md:col-span-2 space-y-4">
+                    <h3 class="text-2xl font-bold text-white mb-6">Core Skills</h3>
+                    <div class="flex flex-wrap gap-3">
+                         <span class="tag px-4 py-2 rounded-lg font-semibold">AI & Automation</span>
+                         <span class="tag px-4 py-2 rounded-lg font-semibold">Business Strategy</span>
+                         <span class="tag px-4 py-2 rounded-lg font-semibold">Sales & Customer Relations</span>
+                         <span class="tag px-4 py-2 rounded-lg font-semibold">Web Development</span>
+                         <span class="tag px-4 py-2 rounded-lg font-semibold">Video & Photo Editing</span>
+                         <span class="tag px-4 py-2 rounded-lg font-semibold">Digital Marketing</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-24">
+            <h2 class="section-heading text-4xl font-bold mb-16">Projects & Case Studies</h2>
+            <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Project 1 -->
+                <div class="card-3d rounded-xl p-8">
+                    <h3 class="text-2xl font-bold text-red-500 mb-3">Digital Transformation for Patel Communication</h3>
+                    <p class="text-gray-400 mb-6">Spearheading the digital evolution of a local business by automating processes, enhancing online presence, and creating AI-driven marketing content.</p>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="tag px-3 py-1 rounded-full text-sm">Automation</span>
+                        <span class="tag px-3 py-1 rounded-full text-sm">AI Video</span>
+                        <span class="tag px-3 py-1 rounded-full text-sm">Digital Marketing</span>
+                        <span class="tag px-3 py-1 rounded-full text-sm">Google Business</span>
+                    </div>
+                </div>
+                <!-- Project 2 -->
+                <div class="card-3d rounded-xl p-8">
+                    <h3 class="text-2xl font-bold text-red-500 mb-3">Personal AI Assistant (Concept 'Jarvis')</h3>
+                    <p class="text-gray-400 mb-6">A self-driven project to develop a Python-based personal assistant to automate daily computer tasks, manage schedules, and explore machine learning concepts.</p>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="tag px-3 py-1 rounded-full text-sm">Python</span>
+                        <span class="tag px-3 py-1 rounded-full text-sm">AI/ML</span>
+                        <span class="tag px-3 py-1 rounded-full text-sm">Automation Scripting</span>
+                        <span class="tag px-3 py-1 rounded-full text-sm">R&D</span>
+                    </div>
+                </div>
+                <!-- Project 3 -->
+                <div class="card-3d rounded-xl p-8 col-span-1 lg:col-span-2">
+                    <h3 class="text-2xl font-bold text-red-500 mb-3">Client Landing Page Development</h3>
+                    <p class="text-gray-400 mb-6">Designed and built a responsive, high-conversion landing page for a client project, focusing on capturing user leads through a streamlined form and clear call-to-action.</p>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="tag px-3 py-1 rounded-full text-sm">HTML & CSS</span>
+                        <span class="tag px-3 py-1 rounded-full text-sm">UI/UX Design</span>
+                        <span class="tag px-3 py-1 rounded-full text-sm">Client Work</span>
+                        <span class="tag px-3 py-1 rounded-full text-sm">Web Design</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <!-- Experience Section -->
+        <section id="experience" class="py-24">
+            <h2 class="section-heading text-4xl font-bold mb-16">Career Journey</h2>
+            <div class="relative border-l-2 border-gray-700/50">
+                <!-- Item 1 -->
+                <div class="mb-12 ml-8">
+                    <span class="absolute flex items-center justify-center w-8 h-8 bg-red-600 rounded-full -left-4 ring-8 ring-[#0A0A0A]">
+                        <i class="fas fa-briefcase text-white"></i>
+                    </span>
+                    <h3 class="flex items-center mb-1 text-xl font-semibold text-white">Digital Operations Specialist <span class="text-red-500 text-sm font-medium ml-3 px-3 py-1 rounded-full border border-red-500">Current</span></h3>
+                    <time class="block mb-2 text-sm font-normal leading-none text-gray-500">Patel Communication</time>
+                    <p class="text-gray-400">Leading modernization efforts through technology implementation, including automation and digital marketing strategies.</p>
+                </div>
+                <!-- Item 2 -->
+                <div class="mb-12 ml-8">
+                     <span class="absolute flex items-center justify-center w-8 h-8 bg-gray-700 rounded-full -left-4 ring-8 ring-[#0A0A0A]">
+                        <i class="fas fa-microchip text-white"></i>
+                    </span>
+                    <h3 class="text-xl font-semibold text-white">Technician Intern (Quality Dept.)</h3>
+                    <time class="block mb-2 text-sm font-normal leading-none text-gray-500">Smartlink Router</time>
+                    <p class="text-gray-400">Responsible for quality assurance of router motherboards, including firmware installation and hardware diagnostics.</p>
+                </div>
+                 <!-- Item 3 -->
+                <div class="ml-8">
+                     <span class="absolute flex items-center justify-center w-8 h-8 bg-gray-700 rounded-full -left-4 ring-8 ring-[#0A0A0A]">
+                        <i class="fas fa-store text-white"></i>
+                    </span>
+                    <h3 class="text-xl font-semibold text-white">Sales & Operations Associate</h3>
+                    <time class="block mb-2 text-sm font-normal leading-none text-gray-500">Family General Store</time>
+                    <p class="text-gray-400">Gained foundational experience in customer service, sales, and inventory management in a fast-paced retail environment.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 text-center">
+            <h2 class="section-heading text-4xl font-bold mb-6">Let's Connect</h2>
+            <p class="text-gray-400 max-w-2xl mx-auto mb-10 text-lg">
+                I'm always open to discussing new projects, creative ideas, or opportunities to be part of an ambitious vision. Feel free to reach out.
+            </p>
+            <a href="mailto:krishnagamersz92@gmail.com" class="inline-block text-2xl font-medium text-red-500 hover:text-red-400 transition-colors">
+                krishnagamersz92@gmail.com
+            </a>
+            <div class="flex justify-center space-x-8 mt-10">
+                <a href="https://github.com/Krjshna" target="_blank" class="text-gray-400 hover:text-white transition-transform transform hover:scale-125 text-3xl"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/krishnabj16" target="_blank" class="text-gray-400 hover:text-white transition-transform transform hover:scale-125 text-3xl"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/krishna.1_6/" target="_blank" class="text-gray-400 hover:text-white transition-transform transform hover:scale-125 text-3xl"><i class="fab fa-instagram"></i></a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-900 relative z-10">
+        <div class="container mx-auto px-6 py-6 text-center text-gray-600">
+            <p>&copy; 2025 Krishnamurthy Bhavalal Jadhav. Designed & Built with Passion.</p>
+        </div>
+    </footer>
+    
+    <!-- This script is for the 3D card tilt effect -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+    
+    <!-- This new script powers the Jarvis background animation -->
+    <script type="text/javascript">
+        // Initialize the 3D tilt effect for the cards
+        VanillaTilt.init(document.querySelectorAll(".card-3d"), {
+            max: 8,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.1
+        });
+        
+        // --- Jarvis Particle Network Animation ---
+        const canvas = document.getElementById('jarvis-background');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray;
+
+        // Mouse position
+        let mouse = {
+            x: null,
+            y: null,
+            radius: (canvas.height/120) * (canvas.width/120)
+        }
+
+        window.addEventListener('mousemove', function(event) {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+
+        // Particle class
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) {
+                this.x = x;
+                this.y = y;
+                this.directionX = directionX;
+                this.directionY = directionY;
+                this.size = size;
+                this.color = color;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = 'rgba(239, 68, 68, 0.5)';
+                ctx.fill();
+            }
+            update() {
+                if (this.x > canvas.width || this.x < 0) {
+                    this.directionX = -this.directionX;
+                }
+                if (this.y > canvas.height || this.y < 0) {
+                    this.directionY = -this.directionY;
+                }
+
+                // check collision detection - mouse
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx*dx + dy*dy);
+                if (distance < mouse.radius + this.size){
+                    if(mouse.x < this.x && this.x < canvas.width - this.size * 10){
+                        this.x += 10;
+                    }
+                    if(mouse.x > this.x && this.x > this.size * 10){
+                        this.x -= 10;
+                    }
+                    if(mouse.y < this.y && this.y < canvas.height - this.size * 10){
+                        this.y += 10;
+                    }
+                    if(mouse.y > this.y && this.y > this.size * 10){
+                        this.y -= 10;
+                    }
+                }
+                this.x += this.directionX;
+                this.y += this.directionY;
+                this.draw();
+            }
+        }
+
+        // Create particle array
+        function init() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 9000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 2) + 1;
+                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                let directionX = (Math.random() * .4) - 0.2;
+                let directionY = (Math.random() * .4) - 0.2;
+                let color = 'rgba(239, 68, 68, 0.5)';
+                particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+            }
+        }
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0,0,innerWidth, innerHeight);
+
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+            }
+            connect();
+        }
+
+        // Connect particles
+        function connect(){
+            let opacityValue = 1;
+            for (let a = 0; a < particlesArray.length; a++){
+                for (let b = a; b < particlesArray.length; b++){
+                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x))
+                    + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+                    if (distance < (canvas.width/7) * (canvas.height/7)){
+                        opacityValue = 1 - (distance/20000);
+                        ctx.strokeStyle='rgba(239, 68, 68,' + opacityValue + ')';
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+        
+        // Resize event
+        window.addEventListener('resize', function(){
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+            mouse.radius = ((canvas.height/120) * (canvas.height/120));
+            init();
+        });
+
+        // Mouse out event
+        window.addEventListener('mouseout', function(){
+            mouse.x = undefined;
+            mouse.y = undefined;
+        });
+
+        init();
+        animate();
+    </script>
+</body>
+</html>
+"""
+
+# --- Define the Routes (the URLs of your website) ---
+
+@app.route('/')
+def home():
+    """
+    This function is executed when someone visits the main URL ('/').
+    It returns the complete HTML content stored in the variable above.
+    """
+    return HTML_CONTENT
+
+# --- Run the Application ---
+
+if __name__ == '__main__':
+    """
+    This starts the development server.
+    - host='0.0.0.0' makes the server accessible on your local network.
+    - port=5000 is the port number it will run on.
+    - debug=True allows for easier development.
+    """
+    app.run(host='0.0.0.0', port=5000, debug=True)
+
